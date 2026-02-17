@@ -1,0 +1,61 @@
+############################
+# Build Folders
+############################
+bin/
+obj/
+
+############################
+# User-specific files
+############################
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+############################
+# VS Code
+############################
+.vscode/
+
+############################
+# Visual Studio
+############################
+.vs/
+
+############################
+# Rider
+############################
+.idea/
+
+############################
+# Logs
+############################
+*.log
+
+############################
+# OS Files
+############################
+.DS_Store
+Thumbs.db
+
+############################
+# Secrets
+############################
+appsettings.Development.json
+appsettings.*.json
+
+############################
+# Publish Output
+############################
+publish/
+*.publishsettings
+
+############################
+# Entity Framework Migrations (Optional)
+# Uncomment if you don't want to track migrations
+# Migrations/
+
+############################
+# Node modules (if using frontend)
+############################
+node_modules/
