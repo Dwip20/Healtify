@@ -354,7 +354,7 @@
                   <svg width="24" height="24"><use xlink:href="#user"></use></svg>
                 </a>
                 <ul class="dropdown-menu border-0 p-3 rounded-0 shadow" aria-labelledby="user-menu">
-                  <li><a href="index.html" class="dropdown-item">Log In </a></li>
+                  <li><a href="index.html" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#loginModal">Log In </a></li>
                   <li><a href="index.html" class="dropdown-item">Profile </a></li>
                   <li><a href="index.html" class="dropdown-item">Log Out </a></li>
                 </ul>
@@ -376,11 +376,101 @@
       </div>
     </header>
 
-    @* <div class="container">
-        <main role="main" class="pb-3"> *@
-            @RenderBody()
-        @* </main>
-    </div> *@
+   
+    @RenderBody()
+
+    <!-- LOGIN MODAL -->
+    <div class="modal fade" id="loginModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title">Login</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+                    <form asp-controller="Account" asp-action="Login" method="post">
+
+                        <div class="mb-3">
+                            <label>Email</label>
+                            <input name="Email" class="form-control" required />
+                        </div>
+
+                        <div class="mb-3">
+                            <label>Password</label>
+                            <input name="Password" type="password" class="form-control" required />
+                        </div>
+
+                        <div class="d-flex justify-content-between mb-3">
+                            <!-- Forgot Password -->
+                            <a asp-controller="Account" asp-action="ForgotPassword" class="small text-decoration-none">
+                                Forgot Password?
+                            </a>
+
+                            <!-- Switch to Register -->
+                            <a href="#" class="small text-decoration-none"
+                              data-bs-dismiss="modal"
+                              data-bs-toggle="modal"
+                              data-bs-target="#registerModal">
+                                New user? Register Now
+                            </a>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100">
+                            Login
+                        </button>
+
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <!-- REGISTER MODAL -->
+    <div class="modal fade" id="registerModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title">Create Account</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+
+                    <form asp-controller="Account" asp-action="Register" method="post">
+
+                        <div class="mb-3">
+                            <label>Full Name</label>
+                            <input name="FullName" class="form-control" required />
+                        </div>
+
+                        <div class="mb-3">
+                            <label>Email</label>
+                            <input name="Email" class="form-control" required />
+                        </div>
+
+                        <div class="mb-3">
+                            <label>Password</label>
+                            <input name="Password" type="password" class="form-control" required />
+                        </div>
+
+                        <button type="submit" class="btn btn-success w-100">
+                            Register
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+   
 
     <footer class="py-5">
       <div class="container-lg">
