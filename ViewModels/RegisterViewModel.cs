@@ -1,8 +1,7 @@
-namespace Healthify.Models
+namespace Healthify.ViewModels
 {
-    public class User
+    public class RegisterViewModel
     {
-        public int id { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
