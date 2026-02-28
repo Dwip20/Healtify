@@ -59,5 +59,36 @@ namespace Healthify.Controllers
             }
             return RedirectToAction("Index","Home");
         }
+
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Login( LoginViewModel vm)
+        {
+            using (NpgsqlConnection connection = _dbFactory.CreateConnection())
+            {
+                connection.Open();
+                string checkQuery = "SELECT 1 FROM users WHERE email=@email and password_hash=@password";
+                
+                using (var chkCmd = new NpgsqlCommand(checkQuery, connection))
+                {
+                    chkCmd.Parameters.AddWithValue("@email", vm.Email);
+                    chkCmd.Parameters.AddWithValue("@password", vm.Password);
+                    using (NpgsqlDataReader reader = chkCmd.ExecuteReader())
+                    {
+                        if (reader.HasRows)
+                        {
+                            TempData["msg"] = "Logged in Successfully";
+                            return RedirectToAction("Index", "Home");
+                        }
+                    }
+                }
+            }
+            TempData["msg"] = "Invalid Email or Password";
+            return RedirectToAction("Index", "Home");
+        }
     }
 }
