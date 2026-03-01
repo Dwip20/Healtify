@@ -322,7 +322,15 @@
               </li>
 
               <li class="nav-item">
-                  
+                   @{
+                       var UserName = Context.Session.GetString("UserName");
+                    }
+                    @if (!string.IsNullOrEmpty(UserName))
+                    {
+                        <a class="nav-link text-success">
+                            @UserName
+                        </a>
+                    }
               </li>
 
               @* <li class="nav-item">
