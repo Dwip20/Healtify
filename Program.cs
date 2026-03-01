@@ -6,6 +6,8 @@ builder.Services.AddControllersWithViews();
 //Add services to the db connection
 builder.Services.AddScoped<Healthify.Data.DbConnectionFactory>();
 
+builder.Services.AddSession();
+
 
 var app = builder.Build();
 
@@ -29,5 +31,6 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
 
+app.UseSession();
 
 app.Run();

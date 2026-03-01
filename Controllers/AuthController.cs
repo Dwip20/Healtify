@@ -71,7 +71,7 @@ namespace Healthify.Controllers
             using (NpgsqlConnection connection = _dbFactory.CreateConnection())
             {
                 connection.Open();
-                string checkQuery = "SELECT 1 FROM users WHERE email=@email and password_hash=@password";
+                string checkQuery = "SELECT full_name FROM users WHERE email=@email and password_hash=@password LIMIT 1";
                 
                 using (var chkCmd = new NpgsqlCommand(checkQuery, connection))
                 {
@@ -79,8 +79,10 @@ namespace Healthify.Controllers
                     chkCmd.Parameters.AddWithValue("@password", vm.Password);
                     using (NpgsqlDataReader reader = chkCmd.ExecuteReader())
                     {
-                        if (reader.HasRows)
+                        if (reader.Read())
                         {
+                            string UserName = reader["full_name"].ToString();
+                            HttpContext.Session.SetString("UserName",UserName);
                             TempData["msg"] = "Logged in Successfully";
                             return RedirectToAction("Index", "Home");
                         }
