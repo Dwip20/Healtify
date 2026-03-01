@@ -92,5 +92,11 @@ namespace Healthify.Controllers
             TempData["msg"] = "Invalid Email or Password";
             return RedirectToAction("Index", "Home");
         }
+
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("Index", "Home");
+        }
     }
 }
