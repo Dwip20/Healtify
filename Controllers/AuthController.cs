@@ -45,7 +45,8 @@ namespace Healthify.Controllers
                 {
                     insertCmd.Parameters.AddWithValue("@name", vm.Name);
                     insertCmd.Parameters.AddWithValue("@email", vm.Email);
-                    insertCmd.Parameters.AddWithValue("@password", vm.Password);
+                    string hashedPassword = BCrypt.Net.BCrypt.HashPassword(vm.Password);
+                    insertCmd.Parameters.AddWithValue("@password", BCrypt.Net.BCrypt.HashPassword(vm.Password));
                     insertCmd.Parameters.AddWithValue("@role", "user");
                     insertCmd.Parameters.AddWithValue("@phone", vm.Phone);
 
@@ -71,20 +72,31 @@ namespace Healthify.Controllers
             using (NpgsqlConnection connection = _dbFactory.CreateConnection())
             {
                 connection.Open();
-                string checkQuery = "SELECT full_name FROM users WHERE email=@email and password_hash=@password LIMIT 1";
+
+                string checkQuery = "SELECT * FROM users WHERE email=@email LIMIT 1";
                 
                 using (var chkCmd = new NpgsqlCommand(checkQuery, connection))
                 {
                     chkCmd.Parameters.AddWithValue("@email", vm.Email);
-                    chkCmd.Parameters.AddWithValue("@password", vm.Password);
+                    
                     using (NpgsqlDataReader reader = chkCmd.ExecuteReader())
                     {
                         if (reader.Read())
                         {
-                            string UserName = reader["full_name"].ToString();
-                            HttpContext.Session.SetString("UserName",UserName);
-                            TempData["msg"] = "Logged in Successfully";
-                            return RedirectToAction("Index", "Home");
+                            string dbPassword = reader["password_hash"].ToString();
+                            bool isValid = BCrypt.Net.BCrypt.Verify(vm.Password, dbPassword);
+
+                            if (isValid)
+                            {
+                                string userName = reader["full_name"].ToString();
+                                int userId = reader.GetInt32(reader.GetOrdinal("id"));
+
+                                HttpContext.Session.SetString("UserName", userName);
+                                HttpContext.Session.SetString("UserId", userId.ToString());
+
+                                TempData["msg"] = "Logged in Successfully";
+                                return RedirectToAction("Index", "Home");
+                            }
                         }
                     }
                 }

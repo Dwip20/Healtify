@@ -321,17 +321,10 @@
                   </a>
               </li>
 
-              <li class="nav-item">
-                   @{
-                       var UserName = Context.Session.GetString("UserName");
-                    }
-                    @if (!string.IsNullOrEmpty(UserName))
-                    {
-                        <a class="nav-link text-success">
-                            @UserName
-                        </a>
-                    }
-              </li>
+              @* <li class="nav-item">
+                   
+                    
+              </li> *@
 
               @* <li class="nav-item">
                   <a class="nav-link" asp-controller="Home" asp-action="Services">Services</a>
@@ -367,9 +360,16 @@
                   <svg width="24" height="24"><use xlink:href="#user"></use></svg>
                 </a>
                 <ul class="dropdown-menu border-0 p-3 rounded-0 shadow" aria-labelledby="user-menu">
-                  <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#loginModal">Log In </a></li>
-                  <li><a href="#" class="dropdown-item">Profile </a></li>
-                  <li><a class="dropdown-item" asp-controller="Auth" asp-action="Logout">Log Out </a></li>
+                  @{
+                       var UserName = Context.Session.GetString("UserName");
+                    }
+                  @if (!string.IsNullOrEmpty(UserName))
+                  {
+                    <li><a href="#" class="dropdown-item">@UserName </a></li>
+                    <li><a class="dropdown-item" asp-controller="Auth" asp-action="Logout">Log Out </a></li>
+                  }else{
+                    <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#loginModal">Log In </a></li>
+                  }
                 </ul>
               </li>
               <li>
