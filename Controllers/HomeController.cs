@@ -6,9 +6,17 @@ namespace healthify.Controllers;
 
 public class HomeController : Controller
 {
+    private readonly ProductRepository _productRepository;
+
+    public HomeController(ProductRepository productRepository)
+    {
+        _productRepository = productRepository;
+    }
+
     public IActionResult Index()
     {
-        return View();
+        var products = _productRepository.GetAllProducts();
+        return View(products);
     }
 
     
