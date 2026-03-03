@@ -6,6 +6,9 @@ builder.Services.AddControllersWithViews();
 //Add services to the db connection
 builder.Services.AddScoped<Healthify.Data.DbConnectionFactory>();
 
+//Add repositories
+builder.Services.AddScoped<ProductRepository>();
+
 builder.Services.AddSession();
 
 
