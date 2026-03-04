@@ -1,0 +1,47 @@
+@* @model Healthify.ViewModels.RegisterViewModel *@
+
+ <!-- REGISTER MODAL -->
+    <div class="modal fade" id="registerModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title">Create Account</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+
+                    <form asp-controller="Auth" asp-action="Register" method="post">
+
+                        <div class="mb-3">
+                            <label>Full Name</label>
+                            <input name="Name" class="form-control" required />
+                        </div>
+
+                        <div class="mb-3">
+                            <label>Email</label>
+                            <input name="Email" type="email" class="form-control" required />
+                        </div>
+
+                        <div class="mb-3">
+                            <label>Phone</label>
+                            <input name="Phone" type="number" class="form-control" required />
+                        </div>
+
+                        <div class="mb-3">
+                            <label>Password</label>
+                            <input name="Password" type="password" class="form-control" required />
+                        </div>
+
+                        <button type="submit" class="btn btn-success w-100">
+                            Register
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
