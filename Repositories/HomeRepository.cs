@@ -17,7 +17,7 @@ public class HomeRepository
             using (NpgsqlConnection connection = _dbFactory.CreateConnection())
             {
                 connection.Open();
-                string query = "SELECT p.id, p.name, p.description, p.price, p.stock, pi.image_url FROM products p LEFT JOIN product_images pi ON p.id = pi.product_id AND pi.is_active = true ORDER BY p.id DESC";
+                string query = "SELECT DISTINCT ON (p.id) p.id, p.name, p.description, p.price, p.stock, pi.image_url FROM products p LEFT JOIN product_images pi ON p.id = pi.product_id AND pi.is_active = true ORDER BY p.id DESC limit 8";
 
                 using (var cmd = new NpgsqlCommand(query, connection)){
                     using (var reader = cmd.ExecuteReader()){
